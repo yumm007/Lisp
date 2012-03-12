@@ -30,3 +30,16 @@
 (defun load-db (filename)
   (with-open-file (in filename)
     (with-standard-io-syntax (setf *db* (read in)))))
+
+(defun make-comparision-expr (field value)
+  `(equal (getf cd ,field) ,value))
+
+(defun make-comparisions-list (fields)
+  (loop while fields
+       collecting (make-comparision-expr (pop fields) (pop fields))))
+
+(defmacro where (&rest clauses)
+  `#'(lambda (cd) (and ,@(make-comparisions-list clauses))))
+
+(defun select (select-fn)
+  (remove-if-not select-fn *db*))
