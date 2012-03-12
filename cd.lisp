@@ -3,8 +3,6 @@
 
 (defvar *db* nil)
 
-(defun add-record(cd) (push cd *db*))
-
 (defun dump-cd()
   (dolist (cd *db*)
     (format t "~{~a:~10t~a~%~}~%" cd)))
@@ -20,3 +18,15 @@
    (prompt-read "Artist")
    (or (parse-integer (prompt-read "Rating") :junk-allowed t) 0)
    (y-or-n-p "Ripped [y/n]")))
+
+(defun add-record() (push (prompt-for-cd) *db*))
+
+(defun save-db (filename)
+  (with-open-file (out filename
+		       :direction :output
+		       :if-exists :supersede)
+    (with-standard-io-syntax(print *db* out))))
+
+(defun load-db (filename)
+  (with-open-file (in filename)
+    (with-standard-io-syntax (setf *db* (read in)))))
