@@ -65,17 +65,27 @@
 ;;let 表达式的执行体--即匿名函数将作为let的返回值，赋值给 *fn*
 ;;所以需要使用 (funcall *fn*)的方式使用 *fn*；
 ;;因为匿名函数使用了其左右范围外的变量 count，导致count可以脱离
-;;起原生作用域，成为自由变量，且只能由这个匿名函数访问。
+;;其原生作用域，成为自由变量，且只能由这个匿名函数访问。
 ;;这时，此匿名函数-即*fn*就称为闭包。因为它封闭来对变量i的访问。
 
-;;简而言之，闭包就是一个可以访问起私有静态变量的匿名函数。
+;;简而言之，闭包就是一个可以访问其私有静态变量的匿名函数。
+;;其存在直到没有变量绑定到此闭包；
+;;如下定义来2个闭包，fn0和fn1，它们都有自己的count，不会重叠。
 
-(defparameter *fn*
+(defvar *fn0*
+	(let ((count 0)) #'(lambda () (setf count (1+ count)))))
+
+(defvar *fn1*
 	(let ((count 0)) #'(lambda () (setf count (1+ count)))))
 
 
-
-
+;;不知道如下是什么意思?
+(defun xxx () 
+	(let ((count 0))
+		(list 
+			#'(lambda () (incf count))
+			#'(lambda () (decf count))
+			#'(lambda () count))))
 
 
 
