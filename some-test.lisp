@@ -83,10 +83,15 @@
 ;;定义一个函数，其返回值为一个列表，列表的元素为三个函数对象，它们分别
 ;;增加和减少或者返回count1的值，通过函数 (funcall (first (xxx)))调用之
 ;;但不知为何不能累加，闭包没有起作用.
-(defun xxx ()
+;;原因：
+;;每次funcall时会先执行函数xxx，其会每次都创建一个独立的count1绑定给那三个函数对象
+;;所以funcall的结果每次都相同；如果把xxx定义为变量，则下面的代码只会执行一次，每次
+;;调用funcall时，直接使用xxx的值。
+;;
+(defvar *xxx* 
 	(let ((count1 0))
 		(list 
-			#'(lambda () (setf count1 (1+ count1)))
+			#'(lambda () (incf count1))
 			#'(lambda () (decf count1))
 			#'(lambda () count1))))
 
