@@ -80,12 +80,20 @@
 
 
 ;;不知道如下是什么意思?
-(defun xxx () 
-	(let ((count 0))
+;;定义一个函数，其返回值为一个列表，列表的元素为三个函数对象，它们分别
+;;增加和减少或者返回count1的值，通过函数 (funcall (first (xxx)))调用之
+;;但不知为何不能累加，闭包没有起作用.
+(defun xxx ()
+	(let ((count1 0))
 		(list 
-			#'(lambda () (incf count))
-			#'(lambda () (decf count))
-			#'(lambda () count))))
+			#'(lambda () (setf count1 (1+ count1)))
+			#'(lambda () (decf count1))
+			#'(lambda () count1))))
+
+
+
+
+
 
 
 
