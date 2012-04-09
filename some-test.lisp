@@ -95,17 +95,18 @@
 			#'(lambda () (decf count1))
 			#'(lambda () count1))))
 
+(defun plot (fn min max step)
+	(loop for i from min to max by step do
+		(loop repeat (funcall fn i) do (format t "*"))
+		(format t "~%")))
 
-
-
-
-
-
-
-
-
-
-
+(defun shiftf-test () 
+	(let ((a 4) (b 6))
+		(format t "a = ~a; b = ~a~%" a b)
+		(rotatef a b)
+		(format t "a = ~a; b = ~a~%" a b)
+		(shiftf a b 10)
+		(format t "a = ~a; b = ~a~%" a b)))
 
 
 
