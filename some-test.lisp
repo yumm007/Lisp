@@ -108,5 +108,30 @@
 		(shiftf a b 10)
 		(format t "a = ~a; b = ~a~%" a b)))
 
+(defmacro progn-test(&rest cond)
+	`(if ,cond
+		(progn
+			(format t "~a ? " ',cond)
+			(format t "yes~%"))
+		(progn
+			(format t "~a ? " ',cond)
+			(format t "no~%"))))
+
+(defun cond-test()
+	(cond
+		((= 1 2) 
+			(format t " cond 1 ~%"))
+		((> 1 2)
+			(format t " cond 2 ~%"))
+		(t
+			(format t " cond others ~%"))))
+
+(defun dolist-test()
+	(dolist (x (list 1 (+ 2 4) 3 4 5))
+		(format t "~a~%" x)))
+
+
+
+
 
 
