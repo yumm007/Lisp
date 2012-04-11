@@ -95,7 +95,7 @@
 			#'(lambda () (decf count1))
 			#'(lambda () count1))))
 
-(defun plot (fn min max step)
+(defun plot1 (fn min max step)
 	(loop for i from min to max by step do
 		(loop repeat (funcall fn i) do (format t "*"))
 		(format t "~%")))
@@ -131,7 +131,12 @@
 		(format t "~a~%" x)))
 
 
+(defun dotimes-test ()
+	(dotimes (x (+ 2 8))
+		(format t "~a~%" x)))
 
-
-
+(defun do-test ()
+	(do ( (x1 0 (incf x1 2)) (x2 1 (incf x2 2)))
+		( (> x1 10) (format t "~a ~a ~%" x1 x2))
+		(format t "next...~a ~a ~%" x1 x2)))
 
