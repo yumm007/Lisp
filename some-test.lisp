@@ -140,3 +140,19 @@
 		( (> x1 10) (format t "~a ~a ~%" x1 x2))
 		(format t "next...~a ~a ~%" x1 x2)))
 
+(defun loop-test (&key (n 10))
+  (loop for i from 1 to n collect i))
+
+(defmacro max-test1 ()
+  `(max ,@(loop for i from 1 to 10 collect (random 199))))
+
+
+(defparameter *arr-test1* 
+  (let ((abc (make-array 5 :fill-pointer 0 :adjustable t)))
+    (list 
+     #'(lambda (x) (vector-push-extend x abc))
+     #'(lambda () (vector-pop abc))
+     #'(lambda () abc))))
+
+
+
