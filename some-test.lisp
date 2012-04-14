@@ -154,5 +154,21 @@
      #'(lambda () (vector-pop abc))
      #'(lambda () abc))))
 
+;;vector test
+(defparameter *ver* (vector 88 1 3 9 11 34 5 1 6 77))
 
+(defmacro FT1 (&rest fun-str)
+  `(dolist (x ,fun-str)
+     (format t "~a" x))
+  `(format t "->:~t~a~%" ,fun-str))
 
+(defun ver-test ()
+  (format t "length:~t~a~%" (length *ver*))
+  (format t "the first val 1 from item 2 is ~a~%" (find 1 *ver* :start 2))
+  (format t "the lastest 1 index is ~a~%" (position 1 *ver* :from-end t))
+  (setf *ver* (substitute 10 1 *ver* :count 1 :from-end t))
+  (format t "count of (/3=0):~t~a~%"
+	  (count-if #'(lambda (x) (= (mod x 3) 0)) *ver*))
+  (format t ">= 5:~t~a~%" (remove 5 *ver* :test '>=))
+  (format t "remove duplicates: ~t~a~%" (remove-duplicates *ver* :from-end t))
+  )
