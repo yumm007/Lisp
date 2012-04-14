@@ -158,9 +158,11 @@
 (defparameter *ver* (vector 88 1 3 9 11 34 5 1 6 77))
 
 (defmacro FT1 (&rest fun-str)
+    `(format t "->:~t~a~%" ,fun-str))
+
+(defmacro extft (&rest fun-str)
   `(dolist (x ,fun-str)
-     (format t "~a" x))
-  `(format t "->:~t~a~%" ,fun-str))
+     (format t "~a" x)))
 
 (defun ver-test ()
   (format t "length:~t~a~%" (length *ver*))
@@ -172,3 +174,11 @@
   (format t ">= 5:~t~a~%" (remove 5 *ver* :test '>=))
   (format t "remove duplicates: ~t~a~%" (remove-duplicates *ver* :from-end t))
   )
+
+(defun concatenate-test () 
+  (format t "~a~%" (concatenate 'vector #(1 2 3) '(4 5 6)))
+  (format t "~a~%" (concatenate 'list #(1 2 3) '(4 5 6)))
+  (format t "~a~%" (concatenate 'string "abc" '(#\d #\e #\f))))
+
+(defun sort-test ()
+  (sort #(7 3 9 9 2 9) #'<))
