@@ -140,9 +140,6 @@
 		( (> x1 10) (format t "~a ~a ~%" x1 x2))
 		(format t "next...~a ~a ~%" x1 x2)))
 
-(defun loop-test (&key (n 10))
-  (loop for i from 1 to n collect i))
-
 (defmacro max-test1 ()
   `(max ,@(loop for i from 1 to 10 collect (random 199))))
 
@@ -178,9 +175,13 @@
 (defun sort-test ()
   (sort #(7 3 9 9 2 9) #'<))
 
-(defun loop-test1 ()
+(defun loop-test ()
   (pt loop for i in (list #\a #\b #\c) collect i)
   (pt loop for i downfrom 10 to 0 by 2 collect i)
   (pt loop for i from 0 to 10 when (evenp i) collect i)
   )
 
+(defparameter *h* (make-hash-table))
+(defun hash-test ()
+  (pt setf (gethash 'foo *h*) "new value")
+  (pt gethash 'foo *h*))
