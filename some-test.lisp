@@ -157,28 +157,30 @@
 ;;vector test
 (defparameter *ver* (vector 88 1 3 9 11 34 5 1 6 77))
 
-(defmacro FT1 (&rest fun-str)
-    `(format t "->:~t~a~%" ,fun-str))
-
-(defmacro extft (&rest fun-str)
-  `(dolist (x ,fun-str)
-     (format t "~a" x)))
+(defmacro pt (&rest fun-str)
+  `(format t "~a =>  ~a ~%" ',fun-str ,fun-str ))
 
 (defun ver-test ()
-  (format t "length:~t~a~%" (length *ver*))
-  (format t "the first val 1 from item 2 is ~a~%" (find 1 *ver* :start 2))
-  (format t "the lastest 1 index is ~a~%" (position 1 *ver* :from-end t))
+  (pt length *ver*)
+  (pt find 1 *ver* :start 2)
+  (pt position 1 *ver* :from-end t)
   (setf *ver* (substitute 10 1 *ver* :count 1 :from-end t))
-  (format t "count of (/3=0):~t~a~%"
-	  (count-if #'(lambda (x) (= (mod x 3) 0)) *ver*))
-  (format t ">= 5:~t~a~%" (remove 5 *ver* :test '>=))
-  (format t "remove duplicates: ~t~a~%" (remove-duplicates *ver* :from-end t))
+  (pt count-if #'(lambda (x) (= (mod x 3) 0)) *ver*)
+  (pt remove 5 *ver* :test '>=)
+  (pt remove-duplicates *ver* :from-end t)
   )
 
 (defun concatenate-test () 
-  (format t "~a~%" (concatenate 'vector #(1 2 3) '(4 5 6)))
-  (format t "~a~%" (concatenate 'list #(1 2 3) '(4 5 6)))
-  (format t "~a~%" (concatenate 'string "abc" '(#\d #\e #\f))))
+  (pt concatenate 'vector #(1 2 3) '(4 5 6))
+  (pt concatenate 'list #(1 2 3) '(4 5 6))
+  (pt concatenate 'string "abc" '(#\d #\e #\f)))
 
 (defun sort-test ()
   (sort #(7 3 9 9 2 9) #'<))
+
+(defun loop-test1 ()
+  (pt loop for i in (list #\a #\b #\c) collect i)
+  (pt loop for i downfrom 10 to 0 by 2 collect i)
+  (pt loop for i from 0 to 10 when (evenp i) collect i)
+  )
+
