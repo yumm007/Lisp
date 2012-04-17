@@ -26,3 +26,28 @@
     (format t "default z value = ~a~%" (point-z c-point))))
 
     
+(defclass slot-share ()
+  ((top-story :accessor slot-share-story :allocation :class
+	      :initarg :top-story)))
+
+(defclass 2d-object()
+  ((x :accessor x :initform 1)
+   (y :accessor y :initform 1)
+   (orientation :accessor orientation :initform 1)))
+
+(defclass 3d-object(2d-object)
+  ((h :accessor h :initform 1)))
+
+(defmethod 3d-class-area((obj 3d-object))
+  (format t "space = ~a * ~a * ~a = ~a" (x obj) (y obj) (h obj) 
+	  (* (x obj) (y obj) (h obj))))
+
+(defun ext-class ()
+  (let ((3d (make-instance '3d-object)))
+	      (setf (h 3d) 5)
+	      (setf (x 3d) 4)
+	      (setf (y 3d) 2)
+	      (describe 3d)
+	      (3d-class-area 3d)))
+
+
