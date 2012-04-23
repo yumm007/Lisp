@@ -21,3 +21,13 @@
   (setf *nur* 0)
   (_check-char exp c)
   *nur*)
+
+;;写一个函数，需要一个表作为参数。取出该表中的元素也是表的那些元素，若不含表则提示之
+(defun find-is-list(exp)
+  (dolist (x exp)
+    (if (atom x)
+	(format t "~a IS NOT LIST~%" x)
+	(format t "~a ~%" x))))
+
+(defmacro my-listp (exp)
+  `(listp ,@exp))
