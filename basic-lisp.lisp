@@ -31,3 +31,34 @@
 
 (defmacro my-listp (exp)
   `(listp ,@exp))
+
+
+;;第二章 上机练习题 木头人
+
+(defparameter *nerd-states* '("sleeping" "eating" "wait-for-compter" "programming" "debugging"))
+;返回下一个状态
+(defun nerdus (cur)
+  (let ((x (cadr (member cur *nerd-states* :test #'equal))))
+	(if (not x)
+	    (car *nerd-states*)
+	    x)))
+;;跳过休眠状态
+(defun sleeping-nerd (cur)
+  (let ((*nerd-states* (remove "sleeping" *nerd-states* :test #'equal)))
+    (nerdus cur)))
+
+;;跳过一级状态
+(defun nerd-on-caffeing (cur)
+  (nerdus (nerdus cur)))
+
+;;以当前的行为模式（即以上的三个切换状态方式）， 从一个状态到下一个状态需要几步
+(defparameter n 0)
+(defun nerd-status-transfer (cur-status tar-status nerd-fun)
+  (if (equal cur-status tar-status)
+      (format t "~a step form ~a to ~a ~%" n cur-status tar-status)
+      (progn
+	(let ((n (1+ n)))
+	      (nerd-status-transfer (funcall nerd-fun cur-status) tar-status nerd-fun)))))
+
+
+
